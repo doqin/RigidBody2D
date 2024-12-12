@@ -12,15 +12,21 @@ struct GameObject;
 
 class BoxCollider2D {
 public:
+    SDL_Rect* boxCollider;
+    BoxCollider2D(GameObject* entity, int x, int y, int w, int h) {
+        this->entity = entity;
+        boxCollider = new SDL_Rect(x - w/2, y - w/2, w, h);
+    }
     BoxCollider2D(GameObject* entity, SDL_Rect* boxCollider) {
         this->entity = entity;
         this->boxCollider = boxCollider;
     }
     ~BoxCollider2D() = default;
-    void Update(const std::vector<BoxCollider2D*> &colliders, double deltaTime);
+
+    void Update();
+    bool CheckCollision(const std::vector<BoxCollider2D *> &colliders) const;
 private:
     GameObject* entity;
-    SDL_Rect* boxCollider;
 };
 
 

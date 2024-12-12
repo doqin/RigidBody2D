@@ -20,36 +20,24 @@ void TestStage::Init() {
     stageHeight = 1200;
 
     // Create player gameObject
-    auto* player = new GameObject();
-    player->x = gameScreen->viewPort.w / 2.0;
-    player->y = gameScreen->viewPort.h / 2.0;
+    GameObject *player;
+    player = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h / 2.0);
     gameObjects.push_back(player);
-    // Create player
     auto* playerSprite = new Sprite();
     playerSprite->loadFromFile(gameScreen->game->renderer, "../assets/player.png");
-    SDL_Rect* playerCollider = new SDL_Rect();
-    playerCollider->x = static_cast<int>(player->x);
-    playerCollider->y = static_cast<int>(player->y);
-    playerCollider->w = 50;
-    playerCollider->h = 50;
+    auto* playerCollider2D = new BoxCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth() / 2.0, playerSprite->getHeight() / 2.0);
     sprites.push_back(new ScreenRepresentation(player, playerSprite));
-    controllers.push_back(new PlayerController(player, 0.5));
-    rigidBodies.push_back(new RigidBody2D(player));
-    colliders.push_back(new BoxCollider2D(player, playerCollider));
+    auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D);
+    controllers.push_back(new PlayerController(player, playerRigidBody2D, 0.5));
+    rigidBodies.push_back(playerRigidBody2D);
+    colliders.push_back(playerCollider2D);
 
     // Ground gameObject
-    auto* ground = new GameObject();
-    ground->x = gameScreen->viewPort.w / 2.0;
-    ground->y = gameScreen->viewPort.h;
-    ground->xDir = 0;
-    ground->yDir = 0;
+    GameObject *ground;
+    ground = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h);
     gameObjects.push_back(ground);
-    SDL_Rect* groundCollider = new SDL_Rect();
-    groundCollider->x = static_cast<int>(ground->x);
-    groundCollider->y = static_cast<int>(ground->y);
-    groundCollider->w = gameScreen->viewPort.w;
-    groundCollider->h = 50;
-    colliders.push_back(new BoxCollider2D(ground, groundCollider));
+    auto* groundCollider2D = new BoxCollider2D(ground, static_cast<int>(ground->x), static_cast<int>(ground->y), gameScreen->viewPort.w, 50);
+    colliders.push_back(groundCollider2D);
 }
 
 void TestStage::Cleanup() {
@@ -78,7 +66,7 @@ void TestStage::HandleEvents() {
                 break;
         }
         for (PlayerController* controller : controllers) {
-            controller->HandleEvents(e);
+            controller->HandleEvents(e, controller->rigidBody);
         }
     }
 }
@@ -87,15 +75,19 @@ void TestStage::Update() {
     LAST = NOW;
     NOW = SDL_GetPerformanceCounter();
     deltaTime = (NOW - LAST) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency());
+    // Update player movement
     for (PlayerController* controller : controllers) {
         controller->Update(deltaTime);
     }
-    for (RigidBody2D* rigidBody : rigidBodies) {
-        rigidBody->Update(deltaTime);
-    }
+    // Update colliders
     for (BoxCollider2D* collider : colliders) {
-        collider->Update(colliders, deltaTime);
+        collider->Update();
     }
+    // Update rigid bodies and check collision
+    for (RigidBody2D* rigidBody : rigidBodies) {
+        rigidBody->Update(colliders, deltaTime);
+    }
+    // std::cout << gameObjects[0]->x << " " << gameObjects[0]->y << std::endl;
 }
 
 void TestStage::Draw() {
@@ -105,6 +97,10 @@ void TestStage::Draw() {
 
     for (ScreenRepresentation* sprite : sprites) {
         sprite->sprite->render(gameScreen->game->renderer, sprite->gameObject->x - sprite->sprite->getWidth() / 4.0, sprite->gameObject->y - sprite->sprite->getHeight() / 4.0, sprite->sprite->getWidth() / 2.0, sprite->sprite->getHeight() / 2.0);
+    }
+    SDL_SetRenderDrawColor(gameScreen->game->renderer, 0xFF, 0, 0, 0xFF);
+    for (BoxCollider2D* collider : colliders) {
+        SDL_RenderDrawRect(gameScreen->game->renderer, collider->boxCollider);
     }
 
     // Update screen

@@ -3,6 +3,9 @@
 //
 
 #include "PlayerController.h"
+
+#include <iostream>
+
 #include "GameObject.h"
 
 void PlayerController::HandleEvents(const SDL_Event &e) {
@@ -29,6 +32,41 @@ void PlayerController::HandleEvents(const SDL_Event &e) {
                     case SDLK_RIGHT:
                         xDir -= 1.0;
                         break;
+                    default:
+                        break;
+                }
+        default:
+            break;
+    }
+}
+
+void PlayerController::HandleEvents(const SDL_Event &e, RigidBody2D *rigidBody) {
+    switch (e.type) {
+        case SDL_KEYDOWN:
+            if (e.key.repeat == 0)
+                switch (e.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        xDir -= 1.0;
+                        break;
+                    case SDLK_RIGHT:
+                        xDir += 1.0;
+                        break;
+                    case SDLK_UP:
+                        rigidBody->jumpForce = -0.5;
+                        break;
+                    default:
+                        break;
+                }
+        break;
+        case SDL_KEYUP:
+            if (e.key.repeat == 0)
+                switch (e.key.keysym.sym) {
+                    case SDLK_LEFT:
+                        xDir += 1.0;
+                    break;
+                    case SDLK_RIGHT:
+                        xDir -= 1.0;
+                    break;
                     default:
                         break;
                 }
