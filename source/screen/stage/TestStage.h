@@ -13,6 +13,7 @@
 #include "component/ScreenRepresentation.h"
 #include "screen/GameplayScreen.h"
 
+class BoundaryCollider2D;
 class BoxCollider2D;
 class PlayerController;
 struct GameObject;
@@ -47,6 +48,7 @@ private:
     std::vector<PlayerController*> controllers;
     std::vector<RigidBody2D*> rigidBodies;
     std::vector<BoxCollider2D*> colliders;
+    std::vector<BoundaryCollider2D*> boundaries;
 
     // Stage size
     int stageWidth;

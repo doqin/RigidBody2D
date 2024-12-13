@@ -35,7 +35,7 @@ void GameEngine::Init(const char* title, int width, int height, bool fullscreen)
     }
 
     // Create the renderer
-    renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(screen, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == nullptr) {
         printf("SDL_CreateRenderer Error: %s\n", SDL_GetError());
     }

@@ -126,6 +126,13 @@ build CMakeFiles/RigidBody2D.dir/source/component/BoxCollider2D.cpp.o: CXX_COMPI
   OBJECT_DIR = CMakeFiles/RigidBody2D.dir
   OBJECT_FILE_DIR = CMakeFiles/RigidBody2D.dir/source/component
 
+build CMakeFiles/RigidBody2D.dir/source/component/BoundaryCollider2D.cpp.o: CXX_COMPILER__RigidBody2D_unscanned_Debug /Users/doqin/CLionProjects/RigidBody2D/source/component/BoundaryCollider2D.cpp || cmake_object_order_depends_target_RigidBody2D
+  DEP_FILE = CMakeFiles/RigidBody2D.dir/source/component/BoundaryCollider2D.cpp.o.d
+  FLAGS = -g -std=gnu++2b -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk -fcolor-diagnostics
+  INCLUDES = -I/Users/doqin/CLionProjects/RigidBody2D/./source -isystem /opt/homebrew/Cellar/sdl2/2.30.9/include/SDL2 -isystem /opt/homebrew/Cellar/sdl2_image/2.8.2_2/include/SDL2 -isystem /opt/homebrew/Cellar/sdl2_ttf/2.22.0/include/SDL2
+  OBJECT_DIR = CMakeFiles/RigidBody2D.dir
+  OBJECT_FILE_DIR = CMakeFiles/RigidBody2D.dir/source/component
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target RigidBody2D
@@ -134,7 +141,7 @@ build CMakeFiles/RigidBody2D.dir/source/component/BoxCollider2D.cpp.o: CXX_COMPI
 #############################################
 # Link the executable RigidBody2D
 
-build RigidBody2D: CXX_EXECUTABLE_LINKER__RigidBody2D_Debug CMakeFiles/RigidBody2D.dir/source/main.cpp.o CMakeFiles/RigidBody2D.dir/source/component/GameEngine.cpp.o CMakeFiles/RigidBody2D.dir/source/screen/GameplayScreen.cpp.o CMakeFiles/RigidBody2D.dir/source/screen/stage/TestStage.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Sprite.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Text.cpp.o CMakeFiles/RigidBody2D.dir/source/component/PlayerController.cpp.o CMakeFiles/RigidBody2D.dir/source/component/DeltaTime.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Timer.cpp.o CMakeFiles/RigidBody2D.dir/source/component/RigidBody2D.cpp.o CMakeFiles/RigidBody2D.dir/source/component/BoxCollider2D.cpp.o | /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2main.a /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2.dylib /opt/homebrew/Cellar/sdl2_image/2.8.2_2/lib/libSDL2_image.dylib /opt/homebrew/Cellar/sdl2_ttf/2.22.0/lib/libSDL2_ttf.dylib
+build RigidBody2D: CXX_EXECUTABLE_LINKER__RigidBody2D_Debug CMakeFiles/RigidBody2D.dir/source/main.cpp.o CMakeFiles/RigidBody2D.dir/source/component/GameEngine.cpp.o CMakeFiles/RigidBody2D.dir/source/screen/GameplayScreen.cpp.o CMakeFiles/RigidBody2D.dir/source/screen/stage/TestStage.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Sprite.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Text.cpp.o CMakeFiles/RigidBody2D.dir/source/component/PlayerController.cpp.o CMakeFiles/RigidBody2D.dir/source/component/DeltaTime.cpp.o CMakeFiles/RigidBody2D.dir/source/component/Timer.cpp.o CMakeFiles/RigidBody2D.dir/source/component/RigidBody2D.cpp.o CMakeFiles/RigidBody2D.dir/source/component/BoxCollider2D.cpp.o CMakeFiles/RigidBody2D.dir/source/component/BoundaryCollider2D.cpp.o | /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2main.a /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2.dylib /opt/homebrew/Cellar/sdl2_image/2.8.2_2/lib/libSDL2_image.dylib /opt/homebrew/Cellar/sdl2_ttf/2.22.0/lib/libSDL2_ttf.dylib
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.1.sdk
   LINK_LIBRARIES = -Wl,-rpath,/opt/homebrew/Cellar/sdl2/2.30.9/lib  /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2main.a  /opt/homebrew/Cellar/sdl2/2.30.9/lib/libSDL2.dylib  /opt/homebrew/Cellar/sdl2_image/2.8.2_2/lib/libSDL2_image.dylib  /opt/homebrew/Cellar/sdl2_ttf/2.22.0/lib/libSDL2_ttf.dylib
   LINK_PATH = -L/opt/homebrew/Cellar/sdl2/2.30.9/lib

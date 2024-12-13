@@ -7,6 +7,8 @@
 #include <SDL_rect.h>
 #include <vector>
 
+#include "BoundaryCollider2D.h"
+
 
 struct GameObject;
 
@@ -25,6 +27,9 @@ public:
 
     void Update();
     bool CheckCollision(const std::vector<BoxCollider2D *> &colliders) const;
+
+    bool CheckCollision(const std::vector<BoundaryCollider2D *> &boundaryColliders) const;
+
 private:
     GameObject* entity;
 };

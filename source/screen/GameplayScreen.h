@@ -15,6 +15,8 @@ class GameplayScreen final : public GameScreen {
 public:
     GameEngine* game;
     SDL_Rect viewPort;
+    const float FPS = 120.0f;
+    const float frameDelay = 1000.0f / FPS;
 
     explicit GameplayScreen(GameEngine* game) {
         this->game = game;

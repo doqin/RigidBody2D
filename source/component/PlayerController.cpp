@@ -6,6 +6,8 @@
 
 #include <iostream>
 
+#include "BoundaryCollider2D.h"
+#include "BoxCollider2D.h"
 #include "GameObject.h"
 
 void PlayerController::HandleEvents(const SDL_Event &e) {
@@ -75,6 +77,20 @@ void PlayerController::HandleEvents(const SDL_Event &e, RigidBody2D *rigidBody) 
     }
 }
 
-void PlayerController::Update(const double deltaTime) const {
+void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders, const double deltaTime) const {
     player->x += xDir * speed * deltaTime;
+    if (boxCollider) {
+        if (boxCollider->CheckCollision(boxColliders)) {
+            player->x -= xDir * speed * deltaTime;
+        }
+    }
+}
+
+void PlayerController::Update(const std::vector<BoundaryCollider2D*> &boundaryColliders, const double deltaTime) const {
+    player->x += xDir * speed * deltaTime;
+    if (boxCollider) {
+        if (boxCollider->CheckCollision(boundaryColliders) && !rigidBody->isGrounded) {
+            player->x -= xDir * speed * deltaTime;
+        }
+    }
 }

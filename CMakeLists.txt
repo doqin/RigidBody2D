@@ -30,7 +30,11 @@ add_executable(RigidBody2D source/main.cpp
         source/component/RigidBody2D.cpp
         source/component/RigidBody2D.h
         source/component/BoxCollider2D.cpp
-        source/component/BoxCollider2D.h)
+        source/component/BoxCollider2D.h
+        source/component/BoundaryCollider2D.h
+        source/component/Vector2D.h
+        source/component/Point2D.h
+        source/component/BoundaryCollider2D.cpp)
 
 find_package(SDL2 CONFIG REQUIRED)
 find_package(SDL2_image CONFIG REQUIRED)
