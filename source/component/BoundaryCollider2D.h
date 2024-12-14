@@ -23,7 +23,7 @@ public:
         this->vector.y = -normal.x;
     }
     ~BoundaryCollider2D();
-    void DrawCollider(SDL_Renderer* gRenderer, int x1, int x2);
+    void DrawCollider(SDL_Renderer* gRenderer, int x1, int x2) const;
     Vector2D normal;
     Vector2D vector;
     Point2D point;

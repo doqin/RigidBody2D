@@ -15,9 +15,9 @@ struct GameObject;
 class BoxCollider2D {
 public:
     SDL_Rect* boxCollider;
-    BoxCollider2D(GameObject* entity, int x, int y, int w, int h) {
+    BoxCollider2D(GameObject* entity, int x, int y, float w, float h) {
         this->entity = entity;
-        boxCollider = new SDL_Rect(x - w/2, y - w/2, w, h);
+        boxCollider = new SDL_Rect(x - w/2.0, y - w/2.0, w, h);
     }
     BoxCollider2D(GameObject* entity, SDL_Rect* boxCollider) {
         this->entity = entity;

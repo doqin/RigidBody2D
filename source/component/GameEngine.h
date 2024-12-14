@@ -7,6 +7,7 @@
 
 #include <SDL.h>
 #include <vector>
+
 class GameScreen;
 
 class GameEngine final {
@@ -20,24 +21,26 @@ public:
 
     GameEngine() = default;
 
-    virtual void Init(const char *title, int width, int height, bool fullscreen);
+    void Init(const char *title, int width, int height, bool fullscreen);
 
-    virtual void Cleanup();
+    void Cleanup();
 
-    virtual void ChangeScreen(GameScreen *state);
+    void ChangeScreen(GameScreen *state);
 
-    virtual void PushScreen(GameScreen *state);
+    void PushScreen(GameScreen *state);
 
-    virtual void PopScreen();
+    void PopScreen();
 
-    virtual void HandleEvents();
+    void HandleEvents();
 
-    virtual void Update();
+    void FixedUpdate();
 
-    virtual void Draw();
+    void Update();
 
-    virtual bool Running() const { return mRunning; }
-    virtual void Quit() { mRunning = false; }
+    void Draw();
+
+    bool Running() const { return mRunning; }
+    void Quit() { mRunning = false; }
 
 protected:
     // The stack of states

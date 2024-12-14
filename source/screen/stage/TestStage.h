@@ -22,9 +22,9 @@ class TestStage final : public GameStage {
 public:
     GameplayScreen* gameScreen;
     SDL_Event e;
-    Uint64 NOW = SDL_GetPerformanceCounter();
+    Uint64 NOW = SDL_GetTicks();
     Uint64 LAST = 0;
-    double deltaTime = 0;
+    float deltaTime = 0;
 
     explicit TestStage(GameplayScreen* gameScreen);
 
@@ -37,6 +37,8 @@ public:
     void Resume() override;
 
     void HandleEvents() override;
+
+    void FixedUpdate() override;
 
     void Update() override;
 

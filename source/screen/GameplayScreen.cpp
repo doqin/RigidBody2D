@@ -32,6 +32,10 @@ void GameplayScreen::HandleEvents() {
     stages.back()->HandleEvents();
 }
 
+void GameplayScreen::FixedUpdate() {
+    stages.back()->FixedUpdate();
+}
+
 void GameplayScreen::Update() {
     stages.back()->Update();
 }

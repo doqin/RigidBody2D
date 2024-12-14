@@ -5,12 +5,12 @@
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
 struct GameObject {
-    double x, y;
+    float x, y;
     GameObject() {
         x = 0;
         y = 0;
     }
-    GameObject(const int x, const int y) {
+    GameObject(const float x, const float y) {
         this->x = x;
         this->y = y;
     }

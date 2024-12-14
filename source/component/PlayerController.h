@@ -15,7 +15,7 @@ struct GameObject;
 
 class PlayerController {
 public:
-    explicit PlayerController(GameObject* entity, RigidBody2D* rigidBody = nullptr, BoxCollider2D* boxCollider = nullptr, const double speed = 0) : xDir(0){
+    explicit PlayerController(GameObject* entity, RigidBody2D* rigidBody = nullptr, BoxCollider2D* boxCollider = nullptr, const float speed = 0, const int jumpForce = -10) : xDir(0){
         player = entity;
         this->speed = speed;
         if (rigidBody) {
@@ -24,19 +24,23 @@ public:
         if (boxCollider) {
             this->boxCollider = boxCollider;
         }
+        if (jumpForce != 0) {
+            this->jumpForce = jumpForce;
+        }
     }
     void HandleEvents(const SDL_Event &e);
     void HandleEvents(const SDL_Event &e, RigidBody2D* rigidBody);
-    void Update(const std::vector<BoxCollider2D *> &boxColliders, double deltaTime) const;
+    void Update(const std::vector<BoxCollider2D *> &boxColliders, float deltaTime) const;
 
-    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders, double deltaTime) const;
+    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders, float deltaTime) const;
 
     RigidBody2D* rigidBody;
 private:
     GameObject* player;
-    const BoxCollider2D *boxCollider;
-    double speed;
-    double xDir;
+    BoxCollider2D *boxCollider;
+    float speed;
+    float xDir;
+    float jumpForce;
 };
 
 

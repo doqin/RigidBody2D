@@ -14,29 +14,27 @@ class BoxCollider2D;
 class RigidBody2D {
 public:
     BoxCollider2D* boxCollider;
-    explicit RigidBody2D(GameObject* entity, BoxCollider2D* boxCollider = nullptr) {
+    explicit RigidBody2D(GameObject* entity, BoxCollider2D* boxCollider = nullptr, const int mass = 1) {
         this->entity = entity;
         if (boxCollider != nullptr) {
             this->boxCollider = boxCollider;
         }
         isGrounded = false;
-        gravity = 9.8;
-        mass = 0.00015;
+        this->mass = mass;
         velocity = 0;
-        acceleration = mass * gravity;
+        acceleration = mass;
     }
-    void Update(double deltaTime);
-    void Update(const std::vector<BoxCollider2D*> &boxColliders, double deltaTime);
-    void Update(const std::vector<BoundaryCollider2D*> &boundaryColliders, double deltaTime);
+    void Update();
+    void Update(const std::vector<BoxCollider2D *> &boxColliders);
+    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders);
 
-    double jumpForce;
+    float jumpForce;
     bool isGrounded;
 private:
     GameObject* entity;
-    double velocity;
-    double gravity;
-    double mass;
-    double acceleration;
+    float velocity;
+    float mass;
+    float acceleration;
 };
 
 

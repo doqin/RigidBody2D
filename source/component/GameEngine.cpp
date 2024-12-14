@@ -8,7 +8,6 @@
 
 void GameEngine::Init(const char* title, int width, int height, bool fullscreen) {
     int flags = 0;
-
     // Save the screen dimensions
     mWidth = width;
     mHeight = height;
@@ -109,6 +108,12 @@ void GameEngine::HandleEvents()
     // Let the state handle events
     screens.back()->HandleEvents();
 }
+
+void GameEngine::FixedUpdate() {
+    // Let the state fixed update the game
+    screens.back()->FixedUpdate();
+}
+
 
 void GameEngine::Update()
 {

@@ -16,10 +16,10 @@ void PlayerController::HandleEvents(const SDL_Event &e) {
             if (e.key.repeat == 0)
                 switch (e.key.keysym.sym) {
                     case SDLK_LEFT:
-                        xDir -= 1.0;
+                        xDir -= 1;
                         break;
                     case SDLK_RIGHT:
-                        xDir += 1.0;
+                        xDir += 1;
                         break;
                     default:
                         break;
@@ -29,10 +29,10 @@ void PlayerController::HandleEvents(const SDL_Event &e) {
             if (e.key.repeat == 0)
                 switch (e.key.keysym.sym) {
                     case SDLK_LEFT:
-                        xDir += 1.0;
+                        xDir += 1;
                         break;
                     case SDLK_RIGHT:
-                        xDir -= 1.0;
+                        xDir -= 1;
                         break;
                     default:
                         break;
@@ -48,26 +48,31 @@ void PlayerController::HandleEvents(const SDL_Event &e, RigidBody2D *rigidBody) 
             if (e.key.repeat == 0)
                 switch (e.key.keysym.sym) {
                     case SDLK_LEFT:
-                        xDir -= 1.0;
+                        xDir -= 1 * speed;
                         break;
                     case SDLK_RIGHT:
-                        xDir += 1.0;
-                        break;
-                    case SDLK_UP:
-                        rigidBody->jumpForce = -0.5;
+                        xDir += 1 * speed;
                         break;
                     default:
                         break;
                 }
+            switch (e.key.keysym.sym) {
+                case SDLK_UP:
+                    if (rigidBody->isGrounded)
+                        rigidBody->jumpForce = -jumpForce;
+                    break;
+                default:
+                    break;
+            }
         break;
         case SDL_KEYUP:
             if (e.key.repeat == 0)
                 switch (e.key.keysym.sym) {
                     case SDLK_LEFT:
-                        xDir += 1.0;
+                        xDir += 1 * speed;
                     break;
                     case SDLK_RIGHT:
-                        xDir -= 1.0;
+                        xDir -= 1 * speed;
                     break;
                     default:
                         break;
@@ -77,20 +82,23 @@ void PlayerController::HandleEvents(const SDL_Event &e, RigidBody2D *rigidBody) 
     }
 }
 
-void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders, const double deltaTime) const {
-    player->x += xDir * speed * deltaTime;
+void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders, const float deltaTime) const {
+    std::cout << xDir << std::endl;
+    player->x += xDir * deltaTime;
     if (boxCollider) {
+        boxCollider->Update();
         if (boxCollider->CheckCollision(boxColliders)) {
-            player->x -= xDir * speed * deltaTime;
+            player->x -= xDir * deltaTime;
+            boxCollider->Update();
         }
     }
 }
 
-void PlayerController::Update(const std::vector<BoundaryCollider2D*> &boundaryColliders, const double deltaTime) const {
-    player->x += xDir * speed * deltaTime;
+void PlayerController::Update(const std::vector<BoundaryCollider2D*> &boundaryColliders, const float deltaTime) const {
+    player->x += xDir * deltaTime;
     if (boxCollider) {
         if (boxCollider->CheckCollision(boundaryColliders) && !rigidBody->isGrounded) {
-            player->x -= xDir * speed * deltaTime;
+            player->x -= xDir * deltaTime;
         }
     }
 }

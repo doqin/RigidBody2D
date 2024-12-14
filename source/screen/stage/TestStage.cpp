@@ -5,7 +5,7 @@
 #include "TestStage.h"
 
 #include <iostream>
-
+#include "component/Timer.h"
 #include "component/BoundaryCollider2D.h"
 #include "component/BoxCollider2D.h"
 #include "component/PlayerController.h"
@@ -28,19 +28,23 @@ void TestStage::Init() {
     playerSprite->loadFromFile(gameScreen->game->renderer, "../assets/player.png");
     auto* playerCollider2D = new BoxCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth() / 2.0, playerSprite->getHeight() / 2.0);
     sprites.push_back(new ScreenRepresentation(player, playerSprite));
-    auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D);
-    controllers.push_back(new PlayerController(player, playerRigidBody2D, playerCollider2D, 0.5));
+    auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D, 1.5f);
+    controllers.push_back(new PlayerController(player, playerRigidBody2D, playerCollider2D, 400, 15));
     rigidBodies.push_back(playerRigidBody2D);
     colliders.push_back(playerCollider2D);
 
     // Left wall gameObject
-    auto *leftWall = new GameObject(0, gameScreen->viewPort.h / 2.0);
+    auto *leftWall = new GameObject(gameScreen->viewPort.w - 50, gameScreen->viewPort.h / 2.0);
     gameObjects.push_back(leftWall);
     auto* leftWallCollider2D = new BoxCollider2D(leftWall, static_cast<int>(leftWall->x), static_cast<int>(leftWall->y), 50, gameScreen->viewPort.h);
     colliders.push_back(leftWallCollider2D);
 
     // Bottom boundary
-    auto* bottomBoundary = new BoundaryCollider2D(0, gameScreen->viewPort.h - 100, Vector2D(0.1, -1));
+    auto* slopeBoundary = new BoundaryCollider2D(gameScreen->viewPort.w / 2, gameScreen->viewPort.h - 50, Vector2D(0.4f, -1));
+    boundaries.push_back(slopeBoundary);
+
+    // Bottom boundary
+    auto* bottomBoundary = new BoundaryCollider2D(0, gameScreen->viewPort.h - 50, Vector2D(0, -1));
     boundaries.push_back(bottomBoundary);
 }
 
@@ -87,30 +91,21 @@ void TestStage::HandleEvents() {
     }
 }
 
-void TestStage::Update() {
-    LAST = NOW;
-    NOW = SDL_GetPerformanceCounter();
-    deltaTime = (NOW - LAST) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency());
-
+void TestStage::FixedUpdate() {
     // Update rigid bodies and check collision
     for (RigidBody2D* rigidBody : rigidBodies) {
-        rigidBody->Update(boundaries, deltaTime);
+        rigidBody->Update(boundaries);
     }
-    // Update colliders after rigid bodies
-    for (BoxCollider2D* collider : colliders) {
-        collider->Update();
-    }
+}
+
+void TestStage::Update() {
     // Update player movement
     for (PlayerController* controller : controllers) {
         controller->Update(colliders, deltaTime);
     }
-    // Update colliders
-    for (BoxCollider2D* collider : colliders) {
-        collider->Update();
-    }
-    if (gameScreen->frameDelay > deltaTime) {
-        SDL_Delay(static_cast<Uint32>(gameScreen->frameDelay - deltaTime));
-    }
+    LAST = NOW;
+    NOW = SDL_GetTicks();
+    deltaTime = static_cast<float>(NOW - LAST) / 1000.f;
 }
 
 void TestStage::Draw() {
