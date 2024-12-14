@@ -40,9 +40,9 @@ public:
         acceleration = mass;
     }
 
-    void Update();
-    void Update(const std::vector<BoxCollider2D*> &boxColliders);
-    void Update(const std::vector<BoundaryCollider2D*> &boundaryColliders);
+    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders,
+                const std::vector<BoxCollider2D *> &boxColliders);
+    void RollBack(float distance);
 
     float jumpForce;
     bool isGrounded;

@@ -47,9 +47,9 @@ public:
 
     void HandleEvents(const SDL_Event &e);
     void HandleEvents(const SDL_Event &e, RigidBody2D* rigidBody);
-    void Update(const std::vector<BoxCollider2D *> &boxColliders, float deltaTime) const;
+    void Update(const std::vector<BoxCollider2D *> &boxColliders) const;
 
-    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders, float deltaTime) const;
+    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders) const;
 
     RigidBody2D* rigidBody;
 private:

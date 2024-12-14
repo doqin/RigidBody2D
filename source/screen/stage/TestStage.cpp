@@ -29,7 +29,7 @@ void TestStage::Init() {
     auto* playerCollider2D = new CircleCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth()/4);
     sprites.push_back(new ScreenRepresentation(player, playerSprite));
     auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D, 1.5f);
-    controllers.push_back(new PlayerController(player, playerRigidBody2D, playerCollider2D, 400, 15));
+    controllers.push_back(new PlayerController(player, playerRigidBody2D, playerCollider2D, 10, 20));
     rigidBodies.push_back(playerRigidBody2D);
 
 
@@ -38,6 +38,12 @@ void TestStage::Init() {
     gameObjects.push_back(leftWall);
     auto* leftWallCollider2D = new BoxCollider2D(leftWall, static_cast<int>(leftWall->x), static_cast<int>(leftWall->y), 50, gameScreen->viewPort.h);
     colliders.push_back(leftWallCollider2D);
+
+    // Platform gameObject
+    auto *platform = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h / 2.0 + 100);
+    gameObjects.push_back(platform);
+    auto* platformCollider2D = new BoxCollider2D(platform, static_cast<int>(platform->x), static_cast<int>(platform->y), 200, 50);
+    colliders.push_back(platformCollider2D);
 
     // Bottom boundary
     auto* slopeBoundary = new BoundaryCollider2D(gameScreen->viewPort.w / 2, gameScreen->viewPort.h - 50, Vector2D(0.4f, -1));
@@ -68,6 +74,9 @@ void TestStage::Cleanup() {
     for (BoundaryCollider2D* boundary : boundaries) {
         delete boundary;
     }
+    for (CircleCollider2D* circle : circles) {
+        delete circle;
+    }
 }
 
 void TestStage::Pause() {
@@ -92,17 +101,17 @@ void TestStage::HandleEvents() {
 }
 
 void TestStage::FixedUpdate() {
+    // Update player movement
+    for (PlayerController* controller : controllers) {
+        controller->Update(colliders);
+    }
     // Update rigid bodies and check collision
     for (RigidBody2D* rigidBody : rigidBodies) {
-        rigidBody->Update(boundaries);
+        rigidBody->Update(boundaries, colliders);
     }
 }
 
 void TestStage::Update() {
-    // Update player movement
-    for (PlayerController* controller : controllers) {
-        controller->Update(colliders, deltaTime);
-    }
     LAST = NOW;
     NOW = SDL_GetTicks();
     deltaTime = static_cast<float>(NOW - LAST) / 1000.f;

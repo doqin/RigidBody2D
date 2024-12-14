@@ -6,7 +6,7 @@
 
 int main() {
     GameEngine game;
-    game.Init("RigidBody2D", 1280, 480, false);
+    game.Init("RigidBody2D", 1280, 720, false);
     game.ChangeScreen(new GameplayScreen(&game));
 
     // Timer

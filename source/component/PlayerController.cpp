@@ -82,14 +82,14 @@ void PlayerController::HandleEvents(const SDL_Event &e, RigidBody2D *rigidBody) 
     }
 }
 
-void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders, const float deltaTime) const {
+void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders) const {
     std::cout << xDir << std::endl;
-    player->x += xDir * deltaTime;
+    player->x += xDir;
     if (boxCollider) {
         boxCollider->Update();
         for (const BoxCollider2D* collider : boxColliders) {
             if (boxCollider->CheckCollision(collider)) {
-                player->x -= xDir * deltaTime;
+                player->x -= xDir;
                 boxCollider->Update();
             }
         }
@@ -98,26 +98,26 @@ void PlayerController::Update(const std::vector<BoxCollider2D*> &boxColliders, c
         circleCollider->Update();
         for (const BoxCollider2D* collider : boxColliders) {
             if (circleCollider->CheckCollision(collider)) {
-                player->x -= xDir * deltaTime;
+                player->x -= xDir;
                 circleCollider->Update();
             }
         }
     }
 }
 
-void PlayerController::Update(const std::vector<BoundaryCollider2D*> &boundaryColliders, const float deltaTime) const {
-    player->x += xDir * deltaTime;
+void PlayerController::Update(const std::vector<BoundaryCollider2D*> &boundaryColliders) const {
+    player->x += xDir;
     if (boxCollider) {
         for (const BoundaryCollider2D* boundaryCollider : boundaryColliders) {
             if (boxCollider->CheckCollision(boundaryCollider)) {
-                player->x -= xDir * deltaTime;
+                player->x -= xDir;
             }
         }
     }
     else if (circleCollider) {
         for (const BoundaryCollider2D* boundaryCollider : boundaryColliders) {
             if (circleCollider->CheckCollision(boundaryCollider)) {
-                player->x -= xDir * deltaTime;
+                player->x -= xDir;
             }
         }
     }
