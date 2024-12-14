@@ -26,12 +26,12 @@ void TestStage::Init() {
     gameObjects.push_back(player);
     auto* playerSprite = new Sprite();
     playerSprite->loadFromFile(gameScreen->game->renderer, "../assets/player.png");
-    auto* playerCollider2D = new BoxCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth() / 2.0, playerSprite->getHeight() / 2.0);
+    auto* playerCollider2D = new CircleCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth()/4);
     sprites.push_back(new ScreenRepresentation(player, playerSprite));
     auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D, 1.5f);
     controllers.push_back(new PlayerController(player, playerRigidBody2D, playerCollider2D, 400, 15));
     rigidBodies.push_back(playerRigidBody2D);
-    colliders.push_back(playerCollider2D);
+
 
     // Left wall gameObject
     auto *leftWall = new GameObject(gameScreen->viewPort.w - 50, gameScreen->viewPort.h / 2.0);

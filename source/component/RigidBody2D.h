@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "BoundaryCollider2D.h"
+#include "CircleCollider2D.h"
 #include "GameObject.h"
 
 class BoxCollider2D;
@@ -14,7 +15,9 @@ class BoxCollider2D;
 class RigidBody2D {
 public:
     BoxCollider2D* boxCollider;
-    explicit RigidBody2D(GameObject* entity, BoxCollider2D* boxCollider = nullptr, const int mass = 1) {
+    CircleCollider2D* circleCollider;
+    explicit RigidBody2D(GameObject* entity, BoxCollider2D* boxCollider = nullptr, const float mass = 1): circleCollider(
+        nullptr), jumpForce(0) {
         this->entity = entity;
         if (boxCollider != nullptr) {
             this->boxCollider = boxCollider;
@@ -24,9 +27,22 @@ public:
         velocity = 0;
         acceleration = mass;
     }
+
+    explicit RigidBody2D(GameObject* entity, CircleCollider2D* circleCollider = nullptr, const float mass = 1): boxCollider(
+        nullptr), jumpForce(0) {
+        this->entity = entity;
+        if (circleCollider != nullptr) {
+            this->circleCollider = circleCollider;
+        }
+        isGrounded = false;
+        this->mass = mass;
+        velocity = 0;
+        acceleration = mass;
+    }
+
     void Update();
-    void Update(const std::vector<BoxCollider2D *> &boxColliders);
-    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders);
+    void Update(const std::vector<BoxCollider2D*> &boxColliders);
+    void Update(const std::vector<BoundaryCollider2D*> &boundaryColliders);
 
     float jumpForce;
     bool isGrounded;

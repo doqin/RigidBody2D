@@ -5,12 +5,12 @@
 #ifndef VECTOR2D_H
 #define VECTOR2D_H
 struct Vector2D {
-    double x, y;
+    float x, y;
     Vector2D() {
         x = 0;
         y = 0;
     }
-    Vector2D(const double x, const double y) {
+    Vector2D(const float x, const float y) {
         this->x = x;
         this->y = y;
     }

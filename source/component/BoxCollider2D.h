@@ -15,9 +15,9 @@ struct GameObject;
 class BoxCollider2D {
 public:
     SDL_Rect* boxCollider;
-    BoxCollider2D(GameObject* entity, int x, int y, float w, float h) {
+    BoxCollider2D(GameObject* entity, const int x, const int y, const int w, const int h) {
         this->entity = entity;
-        boxCollider = new SDL_Rect(x - w/2.0, y - w/2.0, w, h);
+        boxCollider = new SDL_Rect(x - w/2, y - w/2, w, h);
     }
     BoxCollider2D(GameObject* entity, SDL_Rect* boxCollider) {
         this->entity = entity;
@@ -25,10 +25,10 @@ public:
     }
     ~BoxCollider2D() = default;
 
-    void Update();
-    bool CheckCollision(const std::vector<BoxCollider2D *> &colliders) const;
+    void Update() const;
+    bool CheckCollision(const BoxCollider2D* collider) const;
 
-    bool CheckCollision(const std::vector<BoundaryCollider2D *> &boundaryColliders) const;
+    bool CheckCollision(const BoundaryCollider2D* boundaryCollider) const;
 
 private:
     GameObject* entity;

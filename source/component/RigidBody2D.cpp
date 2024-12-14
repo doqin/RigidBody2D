@@ -19,21 +19,23 @@ void RigidBody2D::Update(const std::vector<BoxCollider2D*> &boxColliders) {
     velocity += acceleration;
     entity->y += velocity;
     if (boxCollider) {
-        boxCollider->boxCollider;
-        if (boxCollider->CheckCollision(boxColliders)) {
-            entity->y -= velocity;
-            velocity = 0;
-            isGrounded = true;
-            if (jumpForce != 0) {
-                velocity = jumpForce;
-                entity->y += velocity;
-                jumpForce = 0;
-                isGrounded = false;
+        boxCollider->Update();
+        for (const BoxCollider2D* collider : boxColliders) {
+            if (boxCollider->CheckCollision(collider)) {
+                entity->y -= velocity;
+                velocity = 0;
+                isGrounded = true;
+                if (jumpForce != 0) {
+                    velocity = jumpForce;
+                    entity->y += velocity;
+                    jumpForce = 0;
+                    isGrounded = false;
+                }
             }
-        }
-        else {
-            if (jumpForce != 0) {
-                jumpForce = 0;
+            else {
+                if (jumpForce != 0) {
+                    jumpForce = 0;
+                }
             }
         }
     }
@@ -65,7 +67,29 @@ void RigidBody2D::Update(const std::vector<BoundaryCollider2D*> &boundaryCollide
             jumpForce = 0;
             isGrounded = false;
         }
-
+    }
+    else if (circleCollider) {
+        circleCollider->Update();
+        for (const BoundaryCollider2D* collider : boundaryColliders) {
+            if (const float y = (collider->point.y) + collider->vector.y
+                * (circleCollider->x - collider->point.x) / static_cast<float>(collider->vector.x);
+                y < circleCollider->y + circleCollider->radius) {
+                entity->y -= velocity;
+                circleCollider->Update();
+                while (y < circleCollider->y + circleCollider->radius) {
+                    entity->y -= 1;
+                    circleCollider->Update();
+                }
+                velocity = 0;
+                isGrounded = true;
+                }
+        }
+        if (jumpForce != 0) {
+            velocity = jumpForce;
+            entity->y += velocity;
+            jumpForce = 0;
+            isGrounded = false;
+        }
     }
 }
 

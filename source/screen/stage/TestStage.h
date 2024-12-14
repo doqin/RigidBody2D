@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "component/CircleCollider2D.h"
 #include "component/DeltaTime.h"
 #include "component/GameStage.h"
 #include "component/RigidBody2D.h"
@@ -51,6 +52,7 @@ private:
     std::vector<RigidBody2D*> rigidBodies;
     std::vector<BoxCollider2D*> colliders;
     std::vector<BoundaryCollider2D*> boundaries;
+    std::vector<CircleCollider2D*> circles;
 
     // Stage size
     int stageWidth;
