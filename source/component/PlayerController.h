@@ -47,10 +47,8 @@ public:
 
     void HandleEvents(const SDL_Event &e);
     void HandleEvents(const SDL_Event &e, RigidBody2D* rigidBody);
-    void Update(const std::vector<BoxCollider2D *> &boxColliders) const;
-
-    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders) const;
-
+    void Update(const std::vector<BoundaryCollider2D *> &boundaryColliders, std::vector<BoxCollider2D*> &boxColliders);
+    void RollBack(float x, float width);
     RigidBody2D* rigidBody;
 private:
     GameObject* player;

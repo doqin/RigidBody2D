@@ -14,6 +14,7 @@ struct GameObject;
 
 class BoxCollider2D {
 public:
+    GameObject* entity;
     SDL_Rect* boxCollider;
     BoxCollider2D(GameObject* entity, const int x, const int y, const int w, const int h) {
         this->entity = entity;
@@ -27,11 +28,7 @@ public:
 
     void Update() const;
     bool CheckCollision(const BoxCollider2D* collider) const;
-
     bool CheckCollision(const BoundaryCollider2D* boundaryCollider) const;
-
-private:
-    GameObject* entity;
 };
 
 

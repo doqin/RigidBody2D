@@ -25,7 +25,7 @@ void TestStage::Init() {
     auto player = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h / 2.0);
     gameObjects.push_back(player);
     auto* playerSprite = new Sprite();
-    playerSprite->loadFromFile(gameScreen->game->renderer, "../assets/player.png");
+    playerSprite->loadFromFile(gameScreen->game->renderer, "assets/player.png");
     auto* playerCollider2D = new CircleCollider2D(player, static_cast<int>(player->x), static_cast<int>(player->y), playerSprite->getWidth()/4);
     sprites.push_back(new ScreenRepresentation(player, playerSprite));
     auto* playerRigidBody2D = new RigidBody2D(player, playerCollider2D, 1.5f);
@@ -40,7 +40,7 @@ void TestStage::Init() {
     colliders.push_back(leftWallCollider2D);
 
     // Platform gameObject
-    auto *platform = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h / 2.0 + 100);
+    auto *platform = new GameObject(gameScreen->viewPort.w / 2.0, gameScreen->viewPort.h - 100);
     gameObjects.push_back(platform);
     auto* platformCollider2D = new BoxCollider2D(platform, static_cast<int>(platform->x), static_cast<int>(platform->y), 200, 50);
     colliders.push_back(platformCollider2D);
@@ -103,7 +103,7 @@ void TestStage::HandleEvents() {
 void TestStage::FixedUpdate() {
     // Update player movement
     for (PlayerController* controller : controllers) {
-        controller->Update(colliders);
+        controller->Update(boundaries, colliders);
     }
     // Update rigid bodies and check collision
     for (RigidBody2D* rigidBody : rigidBodies) {
